@@ -5,17 +5,42 @@
  */
 package ttpserver;
 
-/**
- *
- * @author minhq
- */
-public class TTPServer {
+import java.io.*;
+import java.net.*;
+import databasemanager.*;
+import java.sql.*;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class TTPServer{
+    
+    public void main(String[] args){
+        
+        //start the socket server and wait for incomming data
+        SocketServer server = new SocketServer();
+        
+        //Begin to connect to the MySQL database
+        //Create a connection
+        Connection connection;
+        Statement stmt = null;
+        
+        //Establish the connection
+        try{
+            connection = DatabaseManager.getInstance().getConnection();
+            stmt = connection.createStatement();
+            
+            //Insert data into the table using executeUpdate
+            
+            //Use data in the table using executeQuery
+            
+            //Terminate connection
+            connection.close();
+            connection = null;
+            stmt.close();
+            stmt = null;
+        } catch(Exception ex){
+            System.err.println("Error : "+ex.getMessage());
+        }
+        
+        
     }
     
 }

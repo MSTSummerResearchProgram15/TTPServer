@@ -1,13 +1,12 @@
 package ttpserver;
 
-import FileReaderWriter;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 
 import it.unisa.dia.gas.jpbc.Element;
 

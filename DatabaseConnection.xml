@@ -5,15 +5,15 @@
 
 
 <CONNECTION ID="0" DRIVER_CLASS_NAME="com.mysql.jdbc.Driver"
-                   DATABASE_URL="jdbc:mysql:///billing"
+                   DATABASE_URL="jdbc:mysql:///TAC"
                    USER_NAME = "root" 
 				   IS_DEFAULT = "TRUE"/>
 
 
 <CONNECTION ID="1" DRIVER_CLASS_NAME="com.mysql.jdbc.Driver"
                    DATABASE_URL="jdbc:mysql://192.168.20.32/iTelSwitchPlusMomiTest"
-                   USER_NAME = "callshop"
-                    PASSWORD = "callshop123"
+                   USER_NAME = "admin"
+                    PASSWORD = "password"
 				   IS_DEFAULT = "FALSE"/>
 
 

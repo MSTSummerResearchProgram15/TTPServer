@@ -5,42 +5,43 @@
  */
 package ttpserver;
 
+
+import org.apache.commons.lang3.*;
 import java.io.*;
 import java.net.*;
 import databasemanager.*;
+import java.security.MessageDigest;
 import java.sql.*;
+import org.bouncycastle.jce.provider.JDKMessageDigest;
+import org.jdom.JDOMException;
 
 public class TTPServer{
     
-    public void main(String[] args){
+    public byte[] hash(byte[] value){
+        byte[] hash;
+        MessageDigest md = new JDKMessageDigest.SHA256();
+        hash = md.digest(value);
+        return hash;
+    }
+    
+    public boolean verifyUser(int userID, String password){
+           byte[]  mypassword = password.getBytes();
+           mypassword = hash(mypassword);
+           
+           
+        return false;      
+    }
+
+    
+    public static void main(String[] args){
         
         //start the socket server and wait for incomming data
         SocketServer server = new SocketServer();
+                
+        UserCreation newUser = new UserCreation();       
+        //newUser.delete(1);
+        //newUser.Register();
         
-        //Begin to connect to the MySQL database
-        //Create a connection
-        Connection connection;
-        Statement stmt = null;
-        
-        //Establish the connection
-        try{
-            connection = DatabaseManager.getInstance().getConnection();
-            stmt = connection.createStatement();
-            
-            //Insert data into the table using executeUpdate
-            
-            //Use data in the table using executeQuery
-            
-            //Terminate connection
-            connection.close();
-            connection = null;
-            stmt.close();
-            stmt = null;
-        } catch(Exception ex){
-            System.err.println("Error : "+ex.getMessage());
-        }
-        
-        
-    }
     
+    }  
 }

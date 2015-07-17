@@ -21,7 +21,6 @@ public class SocketServer extends Thread{
                 InputStream is = clientSoc.getInputStream();
                 OutputStream os = clientSoc.getOutputStream();
                 
-                //Specify which data to send here
             }
                 
             

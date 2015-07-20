@@ -2,6 +2,7 @@
 package ttpserver;
 
 import databasemanager.DatabaseManager;
+
 import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
@@ -9,17 +10,23 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import org.bouncycastle.jce.provider.JDKMessageDigest;
+
 import java.util.Arrays;
 
 public class SocketServer extends Thread{
 
     ServerSocket server;
+    int keySize;
+    Params params;
+    
     SocketServer(){
         this.start();
     }
-        
+            
     public void run() {
+    	
         try{
             server = new ServerSocket(ServerPort.port);
             Socket clientSoc = null;
@@ -126,5 +133,28 @@ public class SocketServer extends Thread{
    
         return a;
         }
+    
+    public void createParams(int keySize){
+        ParamsGen gen = new ParamsGen();
+
+        switch(keySize){
+            case 128: params = gen.generate(160, 512);
+            	break;
+            case 256: params = gen.generate(360, 1024);
+            	break;
+            case 512: params = gen.generate(620, 2048);
+            	break;
+            case 1024: params = gen.generate(1040, 4096);
+            	break;
+            case 2048: params = gen.generate(2080, 8192);
+            	break;
+            case 4096: params = gen.generate(4160, 16384);
+            	break;
+                    
+            default: params = gen.generate(160, 512);
+                break;           			
+            	//If you choose anything greater than 512 it probably will never finish...
+            } 
+    }
     
 }

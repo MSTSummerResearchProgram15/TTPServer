@@ -5,14 +5,18 @@
  */
 package ttpserver;
 
-import org.apache.commons.lang3.*;
 import java.io.*;
 import java.net.*;
+
 import databasemanager.*;
+
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.*;
+
 import static java.util.Objects.hash;
+
+import org.apache.commons.lang3.SerializationUtils;
 import org.bouncycastle.jce.provider.JDKMessageDigest;
 import org.jdom.JDOMException;
 
@@ -66,11 +70,9 @@ public class UserCreation {
     public void Register(int userid, String password, int role, int keySize){
         
         //Initialize some useful variables
-        Params params;
         User owner;
         KeyGen key;
         boolean isOwner;
-        ParamsGen gen = new ParamsGen();
         owner = new User();
         
         
@@ -78,27 +80,6 @@ public class UserCreation {
         //Turn password into byte array and create a hash
         byte[] passwordBytes = password.getBytes();
         passwordBytes = hash(passwordBytes);
-        
-        
-
-        switch(keySize){
-            case 128: params = gen.generate(160, 512);
-            	break;
-            case 256: params = gen.generate(360, 1024);
-            	break;
-            case 512: params = gen.generate(620, 2048);
-            	break;
-            case 1024: params = gen.generate(1040, 4096);
-            	break;
-            case 2048: params = gen.generate(2080, 8192);
-            	break;
-            case 4096: params = gen.generate(4160, 16384);
-            	break;
-                    
-            default: params = gen.generate(160, 512);
-                break;           			
-            	//If you choose anything greater than 512 it probably will never finish...
-            }
         
         //generate the keys for the data owner
         key = new KeyGen(params);
@@ -128,7 +109,7 @@ public class UserCreation {
      
         try {
             connection = DatabaseManager.getInstance().getConnection();
-            
+            stmt = connection.createStatement();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, g, k, gk, zk, publicKey, secretKey, role) VALUE(?,?,?,?,?,?,?,?,?,?)");           
             
             //set values            

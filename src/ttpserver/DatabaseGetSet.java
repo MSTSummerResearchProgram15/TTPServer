@@ -1,7 +1,9 @@
 package ttpserver;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,6 +14,8 @@ import databasemanager.DatabaseManager;
 public class DatabaseGetSet {
 	Connection connection = null;
     PreparedStatement pstmt = null;
+    String sql;
+    ResultSet result;
     
 	public DatabaseGetSet() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException, JDOMException{
         connection = DatabaseManager.getInstance().getConnection();           
@@ -47,6 +51,65 @@ public class DatabaseGetSet {
 		pstmt.setInt(1, role);
 	}
 	
+	//Start get methods
+	
+	public byte[] getPassword(int usr) throws SQLException{
+		sql = "SELECT password FROM user_table WHERE userID LIKE % "+usr+" %";
+        pstmt = connection.prepareStatement(sql);             
+        result = pstmt.executeQuery();
+        
+        Blob myDbPw = result.getBlob("password");
+        int blobLength = (int) myDbPw.length(); 
+        byte[] blobPw = myDbPw.getBytes(1, blobLength);
+        
+        return blobPw;     
+	}
+	
+	public byte[] getCurveParams(int usr) throws SQLException{
+		sql = "SELECT pairing FROM user_table WHERE userID LIKE % "+usr+" %";
+		pstmt = connection.prepareStatement(sql);
+		result = pstmt.executeQuery();
+		
+		Blob myDbCurveParams = result.getBlob("pairing");
+		int blobLength = (int) myDbCurveParams.length();
+		byte[] blobCurveParams = myDbCurveParams.getBytes(1, blobLength);
+		
+		return blobCurveParams;
+	}
+	
+	public byte[] getPublicKey(int usr) throws SQLException{
+		sql = "SELECT publicKey FROM user_table WHERE userID LIKE % "+usr+" %";
+		pstmt = connection.prepareStatement(sql);
+		result = pstmt.executeQuery();
+		
+		Blob myDbPublicKey = result.getBlob("publicKey");
+		int blobLength = (int) myDbPublicKey.length();
+		byte[] blobPublicKey = myDbPublicKey.getBytes(1, blobLength);
+		
+		return blobPublicKey;
+	}
+	
+	public byte[] getPrivateKey(int usr) throws SQLException{
+		sql = "SELECT secretKey FROM user_table WHERE userID LIKE % "+usr+" %";
+		pstmt = connection.prepareStatement(sql);
+		result = pstmt.executeQuery();
+		
+		Blob myDbPrivateKey = result.getBlob("secretKey");
+		int blobLength = (int) myDbPrivateKey.length();
+		byte[] blobPrivateKey = myDbPrivateKey.getBytes(1, blobLength);
+		
+		return blobPrivateKey;
+	}
+	
+	public int getRole(int usr) throws SQLException{	
+		sql = "SELECT role FROM user_table WHERE userID LIKE % "+usr+" %";
+		pstmt = connection.prepareStatement(sql);
+		result = pstmt.executeQuery();
+		
+		int role = result.getInt("role");
+		
+		return role;
+	}
 	
 	
 	

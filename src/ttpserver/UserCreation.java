@@ -67,15 +67,13 @@ public class UserCreation {
         
     }
     
-    public void Register(int userid, String password, int role, int keySize){
+    public void Register(int userid, String password, int role, int keySize, Params params){
         
         //Initialize some useful variables
         User owner;
         KeyGen key;
         boolean isOwner;
         owner = new User();
-        
-        
         
         //Turn password into byte array and create a hash
         byte[] passwordBytes = password.getBytes();
@@ -87,11 +85,6 @@ public class UserCreation {
             
         byte[] publicKey = owner.getPKBytes();
         byte[] privateKey = owner.getSKBytes();
-        byte[] g = params.getgBytes();
-        byte[] k = params.getkBytes();
-        byte[] gk = params.getg_kBytes();
-        byte[] zk = params.getz_kBytes();
-          
           
         //Old code which can be used to Serialize/Deserialize  
         //Serializer series = new Serializer();         
@@ -110,19 +103,15 @@ public class UserCreation {
         try {
             connection = DatabaseManager.getInstance().getConnection();
             stmt = connection.createStatement();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, g, k, gk, zk, publicKey, secretKey, role) VALUE(?,?,?,?,?,?,?,?,?,?)");           
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, publicKey, secretKey, role) VALUE(?,?,?,?,?,?)");           
             
             //set values            
             pstmt.setInt(1, userid);
             pstmt.setBytes(2, passwordBytes);
             pstmt.setBytes(3, curveParamsBytes);           
-            pstmt.setBytes(4, g);
-            pstmt.setBytes(5, k);
-            pstmt.setBytes(6, gk);
-            pstmt.setBytes(7, zk);
-            pstmt.setBytes(8, publicKey);
-            pstmt.setBytes(9, privateKey);
-            pstmt.setInt(10, role);
+            pstmt.setBytes(4, publicKey);
+            pstmt.setBytes(5, privateKey);
+            pstmt.setInt(6, role);
            
             pstmt.executeUpdate();
           

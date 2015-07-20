@@ -10,8 +10,11 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.bouncycastle.jce.provider.JDKMessageDigest;
+import org.jdom.JDOMException;
 
 import java.util.Arrays;
 
@@ -134,7 +137,7 @@ public class SocketServer extends Thread{
         return a;
         }
     
-    public void createParams(int keySize){
+    public Params createParams(int keySize){
         ParamsGen gen = new ParamsGen();
 
         switch(keySize){
@@ -154,7 +157,45 @@ public class SocketServer extends Thread{
             default: params = gen.generate(160, 512);
                 break;           			
             	//If you choose anything greater than 512 it probably will never finish...
-            } 
+            }
+        
+        byte[] g = params.getgBytes();
+        byte[] k = params.getkBytes();
+        byte[] gk = params.getg_kBytes();
+        byte[] zk = params.getz_kBytes();
+        Connection connection = null;
+        java.sql.Statement stmt = null;
+        
+        try {
+			connection = DatabaseManager.getInstance().getConnection();
+			stmt = connection.createStatement();
+	        PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(g, k, gk, zk) VALUE(?,?,?,?)");           
+
+	        pstmt.setBytes(1, g);
+	        pstmt.setBytes(2, k);
+	        pstmt.setBytes(3, gk);
+	        pstmt.setBytes(4, zk);
+	        
+	        pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+
+        return params;
     }
     
 }

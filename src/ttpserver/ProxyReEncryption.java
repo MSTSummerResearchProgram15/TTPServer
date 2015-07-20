@@ -7,7 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+import databasemanager.DatabaseManager;
 import it.unisa.dia.gas.jpbc.Element;
 
 public class ProxyReEncryption {
@@ -15,7 +20,8 @@ public class ProxyReEncryption {
 	InputStream in;
 	BufferedWriter bw;
 	
-	public Element reencrypt(){
+	public Element reencrypt(String userID, SocketServer server){
+
 		FileReaderWriter bytes = new FileReaderWriter();
 		int ciphertextSize = //owner.getPK().getLengthInBytes(); get the length of PK from database
 		cipher1 = new byte[ciphertextSize];

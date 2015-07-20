@@ -17,28 +17,21 @@ import org.jdom.JDOMException;
 
 public class TTPServer{
     
-    public byte[] hash(byte[] value){
-        byte[] hash;
-        MessageDigest md = new JDKMessageDigest.SHA256();
-        hash = md.digest(value);
-        return hash;
-    }
-    
-    public boolean verifyUser(int userID, String password){
-           byte[]  mypassword = password.getBytes();
-           mypassword = hash(mypassword);
-           
-           
-        return false;      
-    }
 
+
+
+           
+           
+       // return false;      
+    //}
     
-    public static void main(String[] args){
+    
+public static void main(String[] args){
         
         //start the socket server and wait for incomming data
         SocketServer server = new SocketServer();
-                
-        UserCreation newUser = new UserCreation();       
+        
+        //UserCreation newUser = new UserCreation();       
         //newUser.delete(1);
         //newUser.Register();
         

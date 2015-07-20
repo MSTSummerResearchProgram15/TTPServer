@@ -73,6 +73,8 @@ public class UserCreation {
         ParamsGen gen = new ParamsGen();
         owner = new User();
         
+        
+        
         //Turn password into byte array and create a hash
         byte[] passwordBytes = password.getBytes();
         passwordBytes = hash(passwordBytes);
@@ -160,6 +162,12 @@ public class UserCreation {
                 System.out.println("Exception while closing statement::"+e2.getMessage());
             }
         }
+        
     }
+        
+    public void RegisterUser(int userid, String password){
+        
+    }
+    
           
 }

@@ -25,7 +25,7 @@ import org.jdom.JDOMException;
  * @author macbook
  */
 public class UserCreation {
-    
+   
     public byte[] hash(byte[] value){
         byte[] hash;
         MessageDigest md = new JDKMessageDigest.SHA256();

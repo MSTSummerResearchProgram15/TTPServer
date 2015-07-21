@@ -36,6 +36,8 @@ public class SocketServer extends Thread {
             PrintStream output;
             String data, usr = null, pw = null;
             boolean a = false;
+            boolean receivedUsername = false;
+            boolean receivedPassword = false;
 
             clientSoc = server.accept();
 
@@ -45,11 +47,13 @@ public class SocketServer extends Thread {
             while (true) {
 
                 while ((data = input.readLine()) != null) {
-                    
+
                     if (data.startsWith("username:")) {
                         usr = data.substring(9);
+                        receivedUsername = true;
                     } else if (data.startsWith("password:")) {
                         pw = data.substring(9);
+                        receivedPassword = true;
                     }
 
                     if (usr != null && !usr.isEmpty() && pw != null && !pw.isEmpty()) {
@@ -57,12 +61,16 @@ public class SocketServer extends Thread {
                         a = verifyUser(usr, pw);
                         usr = null;
                         pw = null;
+                        receivedUsername = false;
+                        receivedPassword = false;
                     }
 
-                    if (a == true) {
-                        output.write(0);
-                    } else {
-                        output.write(1);
+                    if (receivedUsername && receivedPassword) {
+                        if (a) {
+                            output.write(0);
+                        } else {
+                            output.write(1);
+                        }
                     }
                 }
 
@@ -96,11 +104,11 @@ public class SocketServer extends Thread {
         PreparedStatement pstmt = null;
 
         try {
-            String sql = "SELECT password FROM user_table WHERE userID='" +usr+ "'";
+            String sql = "SELECT password FROM user_table WHERE userID='" + usr + "'";
             connection = DatabaseManager.getInstance().getConnection();
             pstmt = connection.prepareStatement(sql);
             ResultSet result = pstmt.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 myDbPw = result.getBlob("password");
                 //Convert myDbPw from Blob to Byte Array
                 int blobLength = (int) myDbPw.length();
@@ -109,8 +117,6 @@ public class SocketServer extends Thread {
                 //compare the password
                 a = Arrays.equals(mypassword, blobPw);
             }
-            
-
 
         } catch (Exception ex) {
             //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);

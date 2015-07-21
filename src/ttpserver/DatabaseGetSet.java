@@ -57,8 +57,10 @@ public class DatabaseGetSet {
 		sql = "SELECT password FROM user_table WHERE userID LIKE % "+usr+" %";
         pstmt = connection.prepareStatement(sql);             
         result = pstmt.executeQuery();
-        
-        Blob myDbPw = result.getBlob("password");
+        Blob myDbPw = null;
+        while(result.next()){
+            myDbPw = result.getBlob("password");
+        }
         int blobLength = (int) myDbPw.length(); 
         byte[] blobPw = myDbPw.getBytes(1, blobLength);
         
@@ -70,7 +72,10 @@ public class DatabaseGetSet {
 		pstmt = connection.prepareStatement(sql);
 		result = pstmt.executeQuery();
 		
-		Blob myDbCurveParams = result.getBlob("pairing");
+		Blob myDbCurveParams = null;
+		while(result.next()){
+			myDbCurveParams = result.getBlob("pairing");
+		}
 		int blobLength = (int) myDbCurveParams.length();
 		byte[] blobCurveParams = myDbCurveParams.getBytes(1, blobLength);
 		
@@ -82,7 +87,11 @@ public class DatabaseGetSet {
 		pstmt = connection.prepareStatement(sql);
 		result = pstmt.executeQuery();
 		
-		Blob myDbPublicKey = result.getBlob("publicKey");
+		Blob myDbPublicKey = null;
+		
+		while(result.next()){
+			myDbPublicKey = result.getBlob("publicKey");
+		}
 		int blobLength = (int) myDbPublicKey.length();
 		byte[] blobPublicKey = myDbPublicKey.getBytes(1, blobLength);
 		
@@ -94,7 +103,10 @@ public class DatabaseGetSet {
 		pstmt = connection.prepareStatement(sql);
 		result = pstmt.executeQuery();
 		
-		Blob myDbPrivateKey = result.getBlob("secretKey");
+		Blob myDbPrivateKey = null;
+		while(result.next()){
+			myDbPrivateKey = result.getBlob("secretKey");
+		}
 		int blobLength = (int) myDbPrivateKey.length();
 		byte[] blobPrivateKey = myDbPrivateKey.getBytes(1, blobLength);
 		
@@ -105,8 +117,11 @@ public class DatabaseGetSet {
 		sql = "SELECT role FROM user_table WHERE userID LIKE % "+usr+" %";
 		pstmt = connection.prepareStatement(sql);
 		result = pstmt.executeQuery();
+		int role = 0;
 		
-		int role = result.getInt("role");
+		while(result.next()){
+			role = result.getInt("role");
+		}
 		
 		return role;
 	}

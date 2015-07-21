@@ -55,16 +55,19 @@ public class SocketServer extends Thread {
                         pw = data.substring(9);
                         receivedPassword = true;
                     }
-
+                    System.out.println("ok. FINE");
                     if (usr != null && !usr.isEmpty() && pw != null && !pw.isEmpty()) {
 
                         a = verifyUser(usr, pw);
+                        System.out.println("escaped");
                         usr = null;
                         pw = null;
                         receivedUsername = false;
                         receivedPassword = false;
                     }
-
+                    System.out.println(receivedUsername);
+                    System.out.println(receivedPassword);
+                    System.out.println(a);
                     if (receivedUsername && receivedPassword) {
                         if (a) {
                             output.write(0);
@@ -90,6 +93,9 @@ public class SocketServer extends Thread {
 
     public boolean verifyUser(String usr, String pw) {
         //hash the password    
+        System.out.println("something that said that fine");
+        System.out.println(usr);
+        System.out.println(pw);
         byte[] mypassword = pw.getBytes();
         mypassword = hash(mypassword);
         boolean a = false;
@@ -113,6 +119,7 @@ public class SocketServer extends Thread {
 
         } catch (Exception ex) {
             //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Catch something");
             ex.printStackTrace();
         }
 

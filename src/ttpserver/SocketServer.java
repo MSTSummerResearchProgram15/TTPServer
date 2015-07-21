@@ -87,7 +87,6 @@ public class SocketServer extends Thread {
         //hash the password    
         byte[] mypassword = pw.getBytes();
         mypassword = hash(mypassword);
-        System.out.println(mypassword);
         boolean a = false;
 
         Blob myDbPw = null;
@@ -108,12 +107,9 @@ public class SocketServer extends Thread {
                 myDbPw = result.getBlob("password");
             }
             
-            
-
             //Convert myDbPw from Blob to Byte Array
             int blobLength = (int) myDbPw.length();
             byte[] blobPw = myDbPw.getBytes(1, blobLength);
-            System.out.println(blobPw);
 
             //compare the password
             a = Arrays.equals(mypassword, blobPw);

@@ -116,6 +116,9 @@ public class SocketServer extends Thread {
 
                 //compare the password
                 a = Arrays.equals(mypassword, blobPw);
+                System.out.println(Arrays.toString(mypassword));
+                System.out.println(Arrays.toString(blobPw));
+                System.out.println(a);
             }
 
         } catch (Exception ex) {

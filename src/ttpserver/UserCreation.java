@@ -69,6 +69,7 @@ public class UserCreation {
     
     public void Register(int userid, String password, int role, int keySize, Params params){
         
+        
         //Initialize some useful variables
         User owner;
         KeyGen key;
@@ -136,7 +137,7 @@ public class UserCreation {
     }
         
     public void RegisterUser(int userid, String password){
-        
+        // Quan do this
     }
     
           

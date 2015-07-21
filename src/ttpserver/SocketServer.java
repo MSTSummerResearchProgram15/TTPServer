@@ -39,6 +39,13 @@ public class SocketServer extends Thread {
             boolean a = false;
             boolean receivedUsername = false;
             boolean receivedPassword = false;
+            byte[] userCurveParams = null;
+            byte[] userG = null;
+            byte[] userK = null;
+            byte[] userGK = null;
+            byte[] userZK = null;
+            byte[] userPublicKey = null;
+            byte[] 
 
             clientSoc = server.accept();
 
@@ -51,6 +58,8 @@ public class SocketServer extends Thread {
                     
                     if (data.startsWith("Userinfo:")) {
                         usrid = data.substring(9);
+                        DatabaseGetSet DB = new DatabaseGetSet();
+                        
                          
                         
                     }

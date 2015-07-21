@@ -52,12 +52,11 @@ public class SocketServer extends Thread {
                         pw = data.substring(9);
                     }
 
-                    System.out.println(usr);
-                    System.out.println(pw);
-
                     if (usr != null && !usr.isEmpty() && pw != null && !pw.isEmpty()) {
 
                         a = verifyUser(usr, pw);
+                        usr = null;
+                        pw = null;
                     }
 
                     if (a == true) {
@@ -66,8 +65,6 @@ public class SocketServer extends Thread {
                         output.write(1);
                     }
                 }
-                System.out.println(usr);
-                System.out.println(pw);
 
             }
 
@@ -99,20 +96,21 @@ public class SocketServer extends Thread {
         PreparedStatement pstmt = null;
 
         try {
-            String sql = "SELECT userID, password FROM user_table WHERE userID LIKE % " + usr + " %";
+            String sql = "SELECT password FROM user_table WHERE userID='" +usr+ "'";
             connection = DatabaseManager.getInstance().getConnection();
             pstmt = connection.prepareStatement(sql);
             ResultSet result = pstmt.executeQuery();
             while(result.next()){
                 myDbPw = result.getBlob("password");
+                //Convert myDbPw from Blob to Byte Array
+                int blobLength = (int) myDbPw.length();
+                byte[] blobPw = myDbPw.getBytes(1, blobLength);
+
+                //compare the password
+                a = Arrays.equals(mypassword, blobPw);
             }
             
-            //Convert myDbPw from Blob to Byte Array
-            int blobLength = (int) myDbPw.length();
-            byte[] blobPw = myDbPw.getBytes(1, blobLength);
 
-            //compare the password
-            a = Arrays.equals(mypassword, blobPw);
 
         } catch (Exception ex) {
             //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);

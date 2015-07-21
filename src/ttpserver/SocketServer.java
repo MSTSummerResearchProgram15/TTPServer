@@ -1,3 +1,7 @@
+//Quan Gip
+//Dylan
+//Matt
+
 package ttpserver;
 
 import databasemanager.DatabaseManager;
@@ -5,12 +9,9 @@ import databasemanager.DatabaseManager;
 import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.bouncycastle.jce.provider.JDKMessageDigest;
 import org.jdom.JDOMException;
@@ -34,7 +35,7 @@ public class SocketServer extends Thread {
             Socket clientSoc = null;
             BufferedReader input;
             PrintStream output;
-            String data, usr = null, pw = null;
+            String data, usr = null, pw = null, usrid;
             boolean a = false;
             boolean receivedUsername = false;
             boolean receivedPassword = false;
@@ -47,26 +48,29 @@ public class SocketServer extends Thread {
             while (true) {
 
                 while ((data = input.readLine()) != null) {
-
+                    
+                    if (data.startsWith("Userinfo:")) {
+                        usrid = data.substring(9);
+                         
+                        
+                    }
+                    
+                    //Login function
                     if (data.startsWith("username:")) {
                         usr = data.substring(9);
                         receivedUsername = true;
-                    } else if (data.startsWith("password:")) {
+                    } 
+                    if (data.startsWith("password:")) {
                         pw = data.substring(9);
                         receivedPassword = true;
-                    }
-                    System.out.println("ok. FINE");
+                    } 
                     if (usr != null && !usr.isEmpty() && pw != null && !pw.isEmpty()) {
 
                         a = verifyUser(usr, pw);
-                        System.out.println("escaped");
                         usr = null;
                         pw = null;
                        
                     }
-                    System.out.println(receivedUsername);
-                    System.out.println(receivedPassword);
-                    System.out.println(a);
                     if (receivedUsername && receivedPassword) {
                         if (a) {
                             output.write(0);
@@ -96,9 +100,6 @@ public class SocketServer extends Thread {
 
     public boolean verifyUser(String usr, String pw) {
         //hash the password    
-        System.out.println("something that said that fine");
-        System.out.println(usr);
-        System.out.println(pw);
         byte[] mypassword = pw.getBytes();
         mypassword = hash(mypassword);
         boolean a = false;

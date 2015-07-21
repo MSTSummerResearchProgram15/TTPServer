@@ -94,7 +94,7 @@ public class SocketServer extends Thread {
         mypassword = hash(mypassword);
         boolean a = false;
 
-        Blob myDbPw = null;
+        byte[] myDbPw = null;
         //Convert username to int (because we stored integer)
         int user = Integer.parseInt(usr);
 
@@ -104,19 +104,10 @@ public class SocketServer extends Thread {
         PreparedStatement pstmt = null;
 
         try {
-            String sql = "SELECT password FROM user_table WHERE userID='" + usr + "'";
-            connection = DatabaseManager.getInstance().getConnection();
-            pstmt = connection.prepareStatement(sql);
-            ResultSet result = pstmt.executeQuery();
-            while (result.next()) {
-                myDbPw = result.getBlob("password");
-                //Convert myDbPw from Blob to Byte Array
-                int blobLength = (int) myDbPw.length();
-                byte[] blobPw = myDbPw.getBytes(1, blobLength);
+            DatabaseGetSet dgs = new DatabaseGetSet();
+            myDbPw = dgs.getPassword(user);
 
-                //compare the password
-                a = Arrays.equals(mypassword, blobPw);
-            }
+            a = Arrays.equals(mypassword, myDbPw);
 
         } catch (Exception ex) {
             //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);

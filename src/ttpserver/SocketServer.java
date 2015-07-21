@@ -84,10 +84,10 @@ public class SocketServer extends Thread {
     }
 
     public boolean verifyUser(String usr, String pw) {
-        System.out.println("we're vefifying");
         //hash the password    
         byte[] mypassword = pw.getBytes();
         mypassword = hash(mypassword);
+        System.out.println(mypassword);
         boolean a = false;
 
         Blob myDbPw = null;
@@ -104,12 +104,16 @@ public class SocketServer extends Thread {
             connection = DatabaseManager.getInstance().getConnection();
             pstmt = connection.prepareStatement(sql);
             ResultSet result = pstmt.executeQuery();
-
-            myDbPw = result.getBlob("password");
+            while(result.next()){
+                myDbPw = result.getBlob("password");
+            }
+            
+            
 
             //Convert myDbPw from Blob to Byte Array
             int blobLength = (int) myDbPw.length();
             byte[] blobPw = myDbPw.getBytes(1, blobLength);
+            System.out.println(blobPw);
 
             //compare the password
             a = Arrays.equals(mypassword, blobPw);

@@ -104,10 +104,12 @@ public class SocketServer extends Thread {
         PreparedStatement pstmt = null;
 
         try {
+
             DatabaseGetSet dgs = new DatabaseGetSet();
             myDbPw = dgs.getPassword(user);
 
             a = Arrays.equals(mypassword, myDbPw);
+  
 
         } catch (Exception ex) {
             //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);

@@ -62,8 +62,7 @@ public class SocketServer extends Thread {
                         System.out.println("escaped");
                         usr = null;
                         pw = null;
-                        receivedUsername = false;
-                        receivedPassword = false;
+                       
                     }
                     System.out.println(receivedUsername);
                     System.out.println(receivedPassword);
@@ -71,9 +70,13 @@ public class SocketServer extends Thread {
                     if (receivedUsername && receivedPassword) {
                         if (a) {
                             output.write(0);
+                            a = false;
                         } else {
+                            
                             output.write(1);
                         }
+                        receivedUsername = false;
+                        receivedPassword = false;
                     }
                 }
 

@@ -102,7 +102,13 @@ public class SocketServer extends Thread {
 
         byte[] myDbPw = null;
         //Convert username to int (because we stored integer)
-        int user = Integer.parseInt(usr);
+        
+        int user = -1;
+        try{
+        user = Integer.parseInt(usr);
+        }catch(NumberFormatException e){
+            return false;
+        }
 
         //search the username in our database
         //Create an connection to the database            

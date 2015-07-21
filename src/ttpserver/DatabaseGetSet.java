@@ -54,7 +54,7 @@ public class DatabaseGetSet {
 
 	//Start get methods
     public byte[] getPassword(int usr) throws SQLException {
-        sql = "SELECT password FROM user_table WHERE userID LIKE % " + usr + " %";
+        sql = "SELECT password FROM user_table WHERE userID='" + usr + "'";
         pstmt = connection.prepareStatement(sql);
         result = pstmt.executeQuery();
         Blob myDbPw = null;
@@ -68,7 +68,7 @@ public class DatabaseGetSet {
     }
 
     public byte[] getCurveParams(int usr) throws SQLException {
-        sql = "SELECT pairing FROM user_table WHERE userID LIKE % " + usr + " %";
+        sql = "SELECT pairing FROM user_table WHERE userID='" + usr + "'";
         pstmt = connection.prepareStatement(sql);
         result = pstmt.executeQuery();
 
@@ -83,7 +83,7 @@ public class DatabaseGetSet {
     }
 
     public byte[] getPublicKey(int usr) throws SQLException {
-        sql = "SELECT publicKey FROM user_table WHERE userID LIKE % " + usr + " %";
+        sql = "SELECT publicKey FROM user_table WHERE userID='" + usr + "'";
         pstmt = connection.prepareStatement(sql);
         result = pstmt.executeQuery();
 
@@ -99,7 +99,7 @@ public class DatabaseGetSet {
     }
 
     public byte[] getPrivateKey(int usr) throws SQLException {
-        sql = "SELECT secretKey FROM user_table WHERE userID LIKE % " + usr + " %";
+        sql = "SELECT secretKey FROM user_table WHERE userID='" + usr + "'";
         pstmt = connection.prepareStatement(sql);
         result = pstmt.executeQuery();
 
@@ -114,7 +114,7 @@ public class DatabaseGetSet {
     }
 
     public int getRole(int usr) throws SQLException {
-        sql = "SELECT role FROM user_table WHERE userID LIKE % " + usr + " %";
+        sql = "SELECT role FROM user_table WHERE userID=" + usr + "'";
         pstmt = connection.prepareStatement(sql);
         result = pstmt.executeQuery();
         int role = 0;

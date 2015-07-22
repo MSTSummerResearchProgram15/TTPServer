@@ -164,14 +164,7 @@ public class UserCreation {
             DB.setGK(userGK);
             DB.setZK(userZK);
             
-            //generate the keys for the data owner
-            Params pr = new Params();
-            
-            key = new KeyGen(params);
-            owner = key.generate(); 
-            
-            byte[] publicKey = owner.getPKBytes();
-            byte[] privateKey = owner.getSKBytes();
+
             
             
             

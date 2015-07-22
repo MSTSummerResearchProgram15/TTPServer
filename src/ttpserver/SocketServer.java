@@ -45,7 +45,7 @@ public class SocketServer extends Thread {
             byte[] userGK = null;
             byte[] userZK = null;
             byte[] userPublicKey = null;
-            byte[] 
+            
 
             clientSoc = server.accept();
 

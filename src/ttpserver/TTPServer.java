@@ -15,15 +15,15 @@ public static void main(String[] args){
         BasicConfigurator.configure();
         
         //start the socket server and wait for incomming data
-        SocketServer server = new SocketServer();
+        //SocketServer server = new SocketServer();
         
         UserCreation newUser = new UserCreation();       
         //newUser.delete(1);
-        //ParamsGen PG = new ParamsGen();
-        //Params p = new Params();
-        //p = PG.generate(160, 512);
-        //newUser.Register(4, "abc", 1, 128, p );
-        
+        ParamsGen PG = new ParamsGen();
+        Params p = new Params();
+        p = PG.generate(160, 512);
+        //newUser.Register(1, "abc", 0, 128, p );
+        newUser.RegisterUser(2, "def");
     
     }  
 }

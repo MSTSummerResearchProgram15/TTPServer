@@ -73,6 +73,11 @@ public class UserCreation {
         KeyGen key;
         boolean isOwner;
         owner = new User();
+        byte[] userCurveParams = null;
+        byte[] userG = null;
+        byte[] userK = null;
+        byte[] userGK = null;
+        byte[] userZK = null;
         
         //Turn password into byte array and create a hash
         byte[] passwordBytes = password.getBytes();
@@ -85,6 +90,11 @@ public class UserCreation {
         byte[] publicKey = owner.getPKBytes();
         byte[] privateKey = owner.getSKBytes();
           
+        userG = params.getgBytes();
+        userK = params.getkBytes();
+        userGK = params.getg_kBytes();
+        userZK = params.getz_kBytes();
+        
         //Old code which can be used to Serialize/Deserialize  
         //Serializer series = new Serializer();         
         //byte[] pairingBytes = series.serialize(params.getPairing());
@@ -102,16 +112,19 @@ public class UserCreation {
         try {
             connection = DatabaseManager.getInstance().getConnection();
             stmt = connection.createStatement();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, publicKey, secretKey, role) VALUE(?,?,?,?,?,?)");           
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, g, k, gk, zk,  publicKey, secretKey, role) VALUE(?,?,?,?,?,?,?,?,?,?)");           
             
             //set values            
             pstmt.setInt(1, userid);
             pstmt.setBytes(2, passwordBytes);
-            pstmt.setBytes(3, curveParamsBytes);           
-            pstmt.setBytes(4, publicKey);
-            pstmt.setBytes(5, privateKey);
-            pstmt.setInt(6, role);
-           
+            pstmt.setBytes(3, curveParamsBytes);
+            pstmt.setBytes(4, userG);
+            pstmt.setBytes(5, userK);
+            pstmt.setBytes(6, userGK);
+            pstmt.setBytes(7, userZK);
+            pstmt.setBytes(8, publicKey);
+            pstmt.setBytes(9, privateKey);
+            pstmt.setInt(10, role);          
             pstmt.executeUpdate();
           
         } catch (Exception ex) {
@@ -167,25 +180,49 @@ public class UserCreation {
             
             byte[] publicKey = owner.getPKBytes();
             byte[] privateKey = owner.getSKBytes();
-
-            
+           
             //Now create new user lalala
-            DB.setUserID(userid);
-            DB.setPassword(pw);
-            DB.setCurveParams(userCurveParams);
-            DB.setRole(1);
-            DB.setG(userG);
-            DB.setK(userK);
-            DB.setGK(userGK);
-            DB.setZK(userZK);
-            
+                 //Set up the connection
+        Connection connection = null;
+        Statement stmt = null;
 
+     
+        try {
+            connection = DatabaseManager.getInstance().getConnection();
+            stmt = connection.createStatement();
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, g, k, gk, zk,  publicKey, secretKey, role) VALUE(?,?,?,?,?,?,?,?,?,?)");           
             
-            
-            
-            
-            
-            
+            //set values            
+            pstmt.setInt(1, userid);
+            pstmt.setBytes(2, pw);
+            pstmt.setBytes(3, userCurveParams);
+            pstmt.setBytes(4, userG);
+            pstmt.setBytes(5, userK);
+            pstmt.setBytes(6, userGK);
+            pstmt.setBytes(7, userZK);
+            pstmt.setBytes(8, publicKey);
+            pstmt.setBytes(9, privateKey);
+            pstmt.setInt(10, 0);          
+            pstmt.executeUpdate();
+          
+        } catch (Exception ex) {
+            //Logger.getLogger(TTPServer.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }finally{
+            try{
+                connection.close();
+            }catch(Exception e1){
+                System.out.println("Exception while closing connection::"+e1.getMessage());
+            }
+            try{
+                stmt.close();
+            }catch(Exception e2){
+                System.out.println("Exception while closing statement::"+e2.getMessage());
+            }
+        }
+     
+                        
+         
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -197,6 +234,7 @@ public class UserCreation {
         } catch (JDOMException ex) {
             Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
         
     }

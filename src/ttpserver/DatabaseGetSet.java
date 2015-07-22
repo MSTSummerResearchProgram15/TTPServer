@@ -36,6 +36,27 @@ public class DatabaseGetSet {
         pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(pairing) VALUE(?)");
         pstmt.setBytes(1, curveParameters);
     }
+    
+    public void setG(byte[] G) throws SQLException {
+        pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(g) VALUE(?)");
+        pstmt.setBytes(1, G);
+    }
+    
+    public void setK(byte[] K) throws SQLException {
+        pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(k) VALUE(?)");
+        pstmt.setBytes(1, K);
+    }
+    
+    public void setGK(byte[] GK) throws SQLException {
+        pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(gk) VALUE(?)");
+        pstmt.setBytes(1, GK);
+    }
+    
+    public void setZK(byte[] ZK) throws SQLException {
+        pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(zk) VALUE(?)");
+        pstmt.setBytes(1, ZK);
+    }
+    
 
     public void publicKey(byte[] publicKey) throws SQLException {
         pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(publicKey) VALUE(?)");
@@ -125,5 +146,69 @@ public class DatabaseGetSet {
 
         return role;
     }
+    
+    
+    public byte[] getG(int usr) throws SQLException {
+            sql = "SELECT g FROM user_table WHERE userID='" + usr + "'";
+            pstmt = connection.prepareStatement(sql);
+            result = pstmt.executeQuery();
+
+            Blob userG = null;
+            while (result.next()) {
+            userG = result.getBlob("g");
+        }
+        int blobLength = (int) userG.length();
+        byte[] blobG = userG.getBytes(1, blobLength);
+
+        return blobG;    
+    }
+    
+    public byte[] getK(int usr) throws SQLException {
+            sql = "SELECT k FROM user_table WHERE userID='" + usr + "'";
+            pstmt = connection.prepareStatement(sql);
+            result = pstmt.executeQuery();
+
+            Blob userK = null;
+            while (result.next()) {
+            userK = result.getBlob("k");
+        }
+        int blobLength = (int) userK.length();
+        byte[] blobK = userK.getBytes(1, blobLength);
+
+        return blobK;
+    }
+    
+    public byte[] getGK(int usr) throws SQLException {
+            sql = "SELECT gk FROM user_table WHERE userID='" + usr + "'";
+            pstmt = connection.prepareStatement(sql);
+            result = pstmt.executeQuery();
+
+            Blob userGK = null;
+            while (result.next()) {
+            userGK = result.getBlob("gk");
+        }
+        int blobLength = (int) userGK.length();
+        byte[] blobGK = userGK.getBytes(1, blobLength);
+
+        return blobGK;    
+    }
+    
+    public byte[] getZK(int usr) throws SQLException {
+            sql = "SELECT zk FROM user_table WHERE userID='" + usr + "'";
+            pstmt = connection.prepareStatement(sql);
+            result = pstmt.executeQuery();
+
+            Blob userZK = null;
+            while (result.next()) {
+            userZK = result.getBlob("zk");
+        }
+        int blobLength = (int) userZK.length();
+        byte[] blobZK = userZK.getBytes(1, blobLength);
+
+        return blobZK;    
+    }
+    
+    
+        
 
 }

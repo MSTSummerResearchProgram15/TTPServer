@@ -9,13 +9,10 @@ import java.io.*;
 import java.net.*;
 
 import databasemanager.*;
-
 import java.security.MessageDigest;
 import java.sql.*;
-import java.util.*;
-
-import static java.util.Objects.hash;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang3.SerializationUtils;
 import org.bouncycastle.jce.provider.JDKMessageDigest;
 import org.jdom.JDOMException;
@@ -137,7 +134,56 @@ public class UserCreation {
     }
         
     public void RegisterUser(int userid, String password){
-        // Quan do this
+        byte[] userCurveParams = null;
+        byte[] userG = null;
+        byte[] userK = null;
+        byte[] userGK = null;
+        byte[] userZK = null;
+        byte[] pw = password.getBytes();
+        KeyGen key;
+                      
+        try {
+            // Quan do this
+            //yeah right
+            
+            //Pull common values (g, k, gk, zk and curveparams) from database
+            DatabaseGetSet DB = new DatabaseGetSet();
+            userCurveParams = DB.getCurveParams(1);
+            userG = DB.getG(1);
+            userK = DB.getK(1);
+            userGK = DB.getGK(1);
+            userZK = DB.getZK(1);
+            
+            //Now create new user lalala
+            DB.setUserID(userid);
+            DB.setPassword(pw);
+            DB.setCurveParams(userCurveParams);
+            DB.setRole(1);
+            DB.setG(userG);
+            DB.setK(userK);
+            DB.setGK(userGK);
+            DB.setZK(userZK);
+            
+
+            
+            
+            
+            
+            
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JDOMException ex) {
+            Logger.getLogger(UserCreation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
     
           

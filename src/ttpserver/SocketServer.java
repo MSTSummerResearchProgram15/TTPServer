@@ -47,6 +47,7 @@ public class SocketServer extends Thread {
             byte[] userPublicKey = null;
             byte[] userPrivateKey = null;
 
+
             clientSoc = server.accept();
 
             input = new BufferedReader(new InputStreamReader(clientSoc.getInputStream()));

@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.*;
 
 import databasemanager.*;
+import it.unisa.dia.gas.jpbc.PairingParameters;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.logging.Level;
@@ -141,7 +142,8 @@ public class UserCreation {
         byte[] userZK = null;
         byte[] pw = password.getBytes();
         KeyGen key;
-                      
+        User owner;
+        
         try {
             // Quan do this
             //yeah right
@@ -153,6 +155,19 @@ public class UserCreation {
             userK = DB.getK(1);
             userGK = DB.getGK(1);
             userZK = DB.getZK(1);
+            
+            //Create the private and public key
+            
+            PairingParameters p = SerializationUtils.deserialize(userCurveParams);
+            Params pr = new Params(userG, userK, userGK, userZK, p);
+            
+            
+            key = new KeyGen(pr);
+            owner = key.generate(); 
+            
+            byte[] publicKey = owner.getPKBytes();
+            byte[] privateKey = owner.getSKBytes();
+
             
             //Now create new user lalala
             DB.setUserID(userid);

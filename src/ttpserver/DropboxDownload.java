@@ -53,4 +53,11 @@ public class DropboxDownload {
 			outputStream.close();
 		}
 	}
+	
+	public void listFiles() throws DbxException{
+		DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
+        for (DbxEntry child : listing.children) {
+            System.out.println(child.name);
+        }
+	}
 }

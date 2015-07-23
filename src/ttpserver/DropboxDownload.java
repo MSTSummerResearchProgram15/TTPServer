@@ -59,6 +59,6 @@ public class DropboxDownload {
         for (DbxEntry child : listing.children) {
             System.out.println(child.name);
         }
-        System.out.println("No more files");
+        System.out.println("NOMOREFILES");
 	}
 }

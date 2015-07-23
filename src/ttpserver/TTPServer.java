@@ -11,19 +11,22 @@ import org.apache.log4j.BasicConfigurator;
 public class TTPServer{
    
 public static void main(String[] args){
+    System.out.println("the very top");
         //Fix logger warning
         BasicConfigurator.configure();
         
         //start the socket server and wait for incomming data
-        //SocketServer server = new SocketServer();
-        
+        SocketServer server = new SocketServer();
+        System.out.println("Hello");
         UserCreation newUser = new UserCreation();       
         //newUser.delete(1);
         ParamsGen PG = new ParamsGen();
         Params p = new Params();
+        System.out.println("Get here");
         p = PG.generate(160, 512);
-        //newUser.Register(1, "abc", 0, 128, p );
+        System.out.println("Params is ok");
+        //newUser.Register(2, "abc", 0, 128, p );
         newUser.RegisterUser(2, "def");
-    
+        System.out.println("tada");
     }  
 }

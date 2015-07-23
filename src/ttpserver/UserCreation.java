@@ -12,6 +12,7 @@ import databasemanager.*;
 import it.unisa.dia.gas.jpbc.PairingParameters;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.SerializationUtils;
@@ -98,8 +99,9 @@ public class UserCreation {
         //Old code which can be used to Serialize/Deserialize  
         //Serializer series = new Serializer();         
         //byte[] pairingBytes = series.serialize(params.getPairing());
-          
-        byte[] curveParamsBytes = SerializationUtils.serialize(params.getCurveParameters());
+        byte[] curveParamsBytes = new byte[10000];  
+        curveParamsBytes = SerializationUtils.serialize(params.getCurveParameters());
+        System.out.println(Arrays.toString(curveParamsBytes));
 
           
         //Store all generated keys to MySQL database  
@@ -168,6 +170,9 @@ public class UserCreation {
             userK = DB.getK(1);
             userGK = DB.getGK(1);
             userZK = DB.getZK(1);
+            
+            System.out.println(Arrays.toString(userCurveParams));
+            System.out.println(Arrays.toString(userG));
             
             //Create the private and public key
             

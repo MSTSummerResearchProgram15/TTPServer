@@ -11,21 +11,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class FTPServer {
-	
+	Socket sock;
     public FTPServer() throws IOException{
     	ServerSocket servsock = new ServerSocket(13262);
         while (true) {
             System.out.println("Waiting...");
 
-            Socket sock = servsock.accept();
+            sock = servsock.accept();
             System.out.println("Accepted connection : " + sock);
-            OutputStream os = sock.getOutputStream();
-            sock.close();
-    }
+        }
     }
 
-    public void send(OutputStream os, String fileName) throws Exception {
+    public void send(String fileName) throws Exception {
         // sendfile
+        OutputStream os = sock.getOutputStream();
         File myFile = new File(fileName);
         byte[] mybytearray = new byte[(int) myFile.length() + 1];
         FileInputStream fis = new FileInputStream(myFile);
@@ -34,6 +33,8 @@ public class FTPServer {
         System.out.println("Sending...");
         os.write(mybytearray, 0, mybytearray.length);
         os.flush();
+        sock.close();
+
     }
 
 } 

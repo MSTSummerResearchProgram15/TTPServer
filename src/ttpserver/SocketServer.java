@@ -23,6 +23,7 @@ public class SocketServer extends Thread {
     ServerSocket server;
     int keySize;
     Params params;
+    DropboxDownload download;
 
     SocketServer() {
         this.start();
@@ -35,6 +36,7 @@ public class SocketServer extends Thread {
             Socket clientSoc = null;
             BufferedReader input;
             PrintStream output;
+            BufferedWriter output2;
             String data, usr = null, pw = null, usrid;
             boolean a = false;
             boolean receivedUsername = false;
@@ -52,6 +54,8 @@ public class SocketServer extends Thread {
 
             input = new BufferedReader(new InputStreamReader(clientSoc.getInputStream()));
             output = new PrintStream(clientSoc.getOutputStream());
+            output2 = new BufferedWriter(new OutputStreamWriter(clientSoc.getOutputStream()));
+            
 
             while (true) {
 
@@ -103,6 +107,14 @@ public class SocketServer extends Thread {
                         }
                         receivedUsername = false;
                         receivedPassword = false;
+                    }
+                    
+                    if(data.startsWith("fileList:")){
+                    	download = new DropboxDownload();
+                    	String[] buffer = download.listFiles();
+                    	for(int i = 0; i < buffer.length; i++){
+                    		output2.write(buffer[i]);
+                    	}
                     }
                 }
 

@@ -32,12 +32,13 @@ public class SocketServer extends Thread {
     public void run() {
 
         try {
+        	download = new DropboxDownload();
             server = new ServerSocket(ServerPort.port);
             Socket clientSoc = null;
             BufferedReader input;
             PrintStream output;
             BufferedWriter output2;
-            String data, usr = null, pw = null, usrid;
+            String data, usr = null, pw = null, usrid, fileToDownload;
             boolean a = false;
             boolean receivedUsername = false;
             boolean receivedPassword = false;
@@ -110,10 +111,20 @@ public class SocketServer extends Thread {
                     }
                     
                     if(data.startsWith("fileList:")){
-                    	download = new DropboxDownload();
                     	String[] buffer = download.listFiles();
                     	for(int i = 0; i < buffer.length; i++){
                     		output2.write(buffer[i]);
+                    	}
+                    }
+                    
+                    if(data.startsWith("download:")){
+                    	fileToDownload = data.substring(9);
+                    	int count = download.download(fileToDownload);
+                    	ProxyReEncryption reencrypt = new ProxyReEncryption();
+                    	reencrypt.reencrypt(userID, count);
+                    	FTPServer ftpserver = new FTPServer();
+                    	for(int i = 0; i < count; i++){
+                    		ftpserver.send("File" + i + ".txt");
                     	}
                     }
                 }

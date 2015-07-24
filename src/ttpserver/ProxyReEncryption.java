@@ -28,7 +28,7 @@ public class ProxyReEncryption {
 	BufferedWriter bw;
 	Element ownerPublicKey;
 	Element c1, c2;
-	public Element reencrypt(String userID, SocketServer server){
+	public Element reencrypt(String userID, int count){
 		DatabaseGetSet db = new DatabaseGetSet();
 		FileReaderWriter bytes = new FileReaderWriter();
 		ownerPublicKey.setFromBytes(db.getPublicKey(1)); //get the length of owner PK from database
@@ -41,9 +41,7 @@ public class ProxyReEncryption {
 		Field g1 = pairing.getG1();
 		Field gt = pairing.getGT();
 		
-		DropboxDownload dp = new DropboxDownload();
-		for(int i = 0; i < numFiles; i++){
-			dp.download(i);
+		for(int i = 0; i < count; i++){
 			in = new FileInputStream(new File("File" + i + ".txt"));
 			bw = new BufferedWriter(new FileWriter(new File("ReEncryptedFile" + i + ".txt")));
 			cipher1 = bytes.readFile(ciphertextSize, in);
@@ -54,7 +52,6 @@ public class ProxyReEncryption {
 			c2.setFromBytes(cipher2);
 			//Element reencrypt = pairing(c1, //reencrypt key here);
 			Element ialpha = reencrypt.powZn(user1.getISK());
-			
 			//Need to transfer to client here
 		}
 	}

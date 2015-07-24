@@ -43,7 +43,7 @@ public class DropboxDownload {
         System.out.println("Linked account: " + client.getAccountInfo().displayName);
 	}
 	
-	public void download(String folderName) throws DbxException, IOException{
+	public int download(String folderName) throws DbxException, IOException{
 		 DbxEntry.WithChildren listing = client.getMetadataWithChildren("/folderName");
 		//get the number of files in the specified folder
 	     int count = 0;
@@ -62,6 +62,7 @@ public class DropboxDownload {
 				outputStream.close();
 			}
 	    }
+	    return count;
 	}
 	
 	public String[] listFiles() throws DbxException{

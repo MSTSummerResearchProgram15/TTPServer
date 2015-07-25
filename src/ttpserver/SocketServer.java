@@ -17,6 +17,7 @@ import org.bouncycastle.jce.provider.JDKMessageDigest;
 import org.jdom.JDOMException;
 
 import java.util.Arrays;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class SocketServer extends Thread {
 
@@ -50,6 +51,7 @@ public class SocketServer extends Thread {
             byte[] userZK = null;
             byte[] userPublicKey = null;
             byte[] userPrivateKey = null;
+            int userRole;
 
 
             clientSoc = server.accept();
@@ -63,25 +65,46 @@ public class SocketServer extends Thread {
 
                 while ((data = input.readLine()) != null) {
                     
-                    //if (data.startsWith("Userinfo:")) {
-                        //usrid = data.substring(9);
-                        //int userid = Integer.parseInt(usrid);
+                    if (data.startsWith("Userinfo:")) {
+                        usrid = data.substring(9);
+                        int userid = Integer.parseInt(usrid);
                         //Grab the values in the database
-                        //DatabaseGetSet DB = new DatabaseGetSet();
+                        DatabaseGetSet DB = new DatabaseGetSet();
                         
-                        //userCurveParams = DB.getCurveParams(userid);
-                        //userG = DB.getG(userid);
-                        //userK = DB.getK(userid);
-                        //userGK = DB.getGK(userid);
-                        //userZK = DB.getZK(userid);
-                        //userPublicKey = DB.getPublicKey(userid);
-                        //userPrivateKey = DB.getPrivateKey(userid);
+                        userG = DB.getG(userid);
+                        byte[] userGname = new byte['a'];
+                        byte[] userGByte = Add2Arrays(userGname, userG);
                         
+                        userK = DB.getK(userid);
+                        byte[] userKname = new byte['b'];
+                        byte[] userKByte = Add2Arrays(userKname, userK);
+                        
+                        userGK = DB.getGK(userid);
+                        byte[] userGKname = new byte['c'];
+                        byte[] userGKByte = Add2Arrays(userGKname, userGK);
+                        
+                        userZK = DB.getZK(userid);
+                        byte[] userZKname = new byte['d'];
+                        byte[] userZKByte = Add2Arrays(userZKname, userZK);
+                        
+                        
+                        userPrivateKey = DB.getPrivateKey(userid);
+                        byte[] userPKname = new byte['e'];
+                        byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
+                        
+                        userRole = DB.getRole(userid);
+
                         
                         //Now send them to user
+                        output.write(userGByte);
+                        output.write(userKByte);
+                        output.write(userGKByte);
+                        output.write(userZKByte);
+                        output.write(userPKByte);
+                        output.write(userRole);
                         
                         
-                    //}
+                    }
                     
                     //Login function
                     if (data.startsWith("username:")) {
@@ -131,12 +154,12 @@ public class SocketServer extends Thread {
                 }
 
             }
-
+            
         } catch (Exception ex) {
             System.out.println("Error : " + ex.getMessage());
         }
+        
     }
-
     public byte[] hash(byte[] value) {
         byte[] hash;
         MessageDigest md = new JDKMessageDigest.SHA256();
@@ -249,22 +272,8 @@ public class SocketServer extends Thread {
         return params;
     }
 
-    /*
-     public Params restoreParams(int baseUser){
-     byte[] g, k, g_k, z_k;
-     PairingParameters curveParams;
-        
-     Pairing pairing;
-     Params p;
-        
-     // retrieve values from database
-        
-     // reconstruct values from byte arrays
-        
-     // set values in Params p
-        
-     // return p
-     return p;
-     }
-     */
+    public byte[] Add2Arrays(byte[] one, byte[] two){
+        byte[] concatBytes = ArrayUtils.addAll(one,two);
+        return concatBytes;
+    }
 }

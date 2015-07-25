@@ -65,8 +65,6 @@ public class SocketServer extends Thread {
 
             while (true) {
                 
-                
-
                 while ((data = input.readLine()) != null) {
                     
                     if (data.startsWith("Userinfo:")) {

@@ -155,7 +155,6 @@ public class UserCreation {
     }
         
     public void RegisterUser(int userid, String password){
-        byte[] userCurveParams = null;
         byte[] userG = null;
         byte[] userK = null;
         byte[] userGK = null;
@@ -171,13 +170,12 @@ public class UserCreation {
             
             //Pull common values (g, k, gk, zk and curveparams) from database
             DatabaseGetSet DB = new DatabaseGetSet();
-            userCurveParams = DB.getCurveParams(1);
+
             userG = DB.getG(1);
             userK = DB.getK(1);
             userGK = DB.getGK(1);
             userZK = DB.getZK(1);
             
-            System.out.println(Arrays.toString(userCurveParams));
             System.out.println(Arrays.toString(userG));
             
             //Create the private and public key
@@ -206,6 +204,7 @@ public class UserCreation {
             //set values            
             pstmt.setInt(1, userid);
             pstmt.setBytes(2, pw);
+            byte[] userCurveParams = null;
             pstmt.setBytes(3, userCurveParams);
             pstmt.setBytes(4, userG);
             pstmt.setBytes(5, userK);

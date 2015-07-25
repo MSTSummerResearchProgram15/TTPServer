@@ -38,7 +38,7 @@ public class SocketServer extends Thread {
             BufferedReader input;
             PrintStream output;
             BufferedWriter output2;
-            String data, usr = null, pw = null, usrid, fileToDownload;
+            String data, usr = null, pw = null, usrid = null, fileToDownload;
             boolean a = false;
             boolean receivedUsername = false;
             boolean receivedPassword = false;
@@ -121,7 +121,7 @@ public class SocketServer extends Thread {
                     	fileToDownload = data.substring(9);
                     	int count = download.download(fileToDownload);
                     	ProxyReEncryption reencrypt = new ProxyReEncryption();
-                    	reencrypt.reencrypt(userID, count);
+                    	reencrypt.reencrypt(usrid, count);
                     	FTPServer ftpserver = new FTPServer();
                     	for(int i = 0; i < count; i++){
                     		ftpserver.send("File" + i + ".txt");

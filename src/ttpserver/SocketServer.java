@@ -62,25 +62,25 @@ public class SocketServer extends Thread {
 
                 while ((data = input.readLine()) != null) {
                     
-                    if (data.startsWith("Userinfo:")) {
-                        usrid = data.substring(9);
-                        int userid = Integer.parseInt(usrid);
+                    //if (data.startsWith("Userinfo:")) {
+                        //usrid = data.substring(9);
+                        //int userid = Integer.parseInt(usrid);
                         //Grab the values in the database
-                        DatabaseGetSet DB = new DatabaseGetSet();
+                        //DatabaseGetSet DB = new DatabaseGetSet();
                         
-                        userCurveParams = DB.getCurveParams(userid);
-                        userG = DB.getG(userid);
-                        userK = DB.getK(userid);
-                        userGK = DB.getGK(userid);
-                        userZK = DB.getZK(userid);
-                        userPublicKey = DB.getPublicKey(userid);
-                        userPrivateKey = DB.getPrivateKey(userid);
+                        //userCurveParams = DB.getCurveParams(userid);
+                        //userG = DB.getG(userid);
+                        //userK = DB.getK(userid);
+                        //userGK = DB.getGK(userid);
+                        //userZK = DB.getZK(userid);
+                        //userPublicKey = DB.getPublicKey(userid);
+                        //userPrivateKey = DB.getPrivateKey(userid);
                         
                         
                         //Now send them to user
                         
                         
-                    }
+                    //}
                     
                     //Login function
                     if (data.startsWith("username:")) {

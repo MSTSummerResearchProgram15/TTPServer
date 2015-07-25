@@ -108,11 +108,17 @@ public class SocketServer extends Thread {
                         
                         //Now send them to user
                         output.write(userGByte);
+                        output.flush();
                         output.write(userKByte);
+                        output.flush();
                         output.write(userGKByte);
+                        output.flush();
                         output.write(userZKByte);
+                        output.flush();
                         output.write(userPKByte);
+                        output.flush();
                         output.write(userRole);
+                        output.flush();
                         
                     }    
                     
@@ -140,10 +146,12 @@ public class SocketServer extends Thread {
                     if (receivedUsername && receivedPassword) {
                         if (a) {
                             output.write(0);
+                            output.flush();
                             a = false;
                         } else {
                             
                             output.write(1);
+                            output.flush();
                         }
                         receivedUsername = false;
                         receivedPassword = false;
@@ -154,6 +162,7 @@ public class SocketServer extends Thread {
                     	String[] buffer = download.listFiles();
                     	for(int i = 0; i < buffer.length; i++){
                     		output2.write(buffer[i]);
+                                output.flush();
                     	}
                     }
                     

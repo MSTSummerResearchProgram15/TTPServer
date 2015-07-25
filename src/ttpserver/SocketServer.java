@@ -66,8 +66,9 @@ public class SocketServer extends Thread {
             while (true) {
                 
                 while ((data = input.readLine()) != null) {
-                    
+                    System.out.println(data);
                     if (data.startsWith("Userinfo:")) {
+                        System.out.println("Did you make it here");
                         usrid = data.substring(9);
                         int userid = Integer.parseInt(usrid);
                         //Grab the values in the database

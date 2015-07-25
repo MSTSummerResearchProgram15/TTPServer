@@ -18,8 +18,8 @@ import com.dropbox.core.DbxWebAuthNoRedirect;
 public class DropboxDownload {
 	DbxClient client;
 	public DropboxDownload() throws DbxException, IOException{
-		final String APP_KEY = "";
-        final String APP_SECRET = "";
+		final String APP_KEY = "s96ghytmr7e7bfm";
+        final String APP_SECRET = "8n7eb6a9fisdwxs";
 
         DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
 

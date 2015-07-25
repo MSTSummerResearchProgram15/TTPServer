@@ -70,8 +70,7 @@ public class SocketServer extends Thread {
                     System.out.println("we got this:");
                     System.out.println(data);
                       
-                 
-                    
+                
                     //Login function
                     if (data.startsWith("username:")) {
                         usr = data.substring(9);

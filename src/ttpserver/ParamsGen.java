@@ -14,8 +14,7 @@ public class ParamsGen {
 	public Params generate(int x, int y){
 		params = new Params();
 		//Get the curve parameters
-		PairingParametersGenerator pg = new TypeACurveGenerator(x, y);
-		PairingParameters curveParams = pg.generate();
+		PairingParameters curveParams = PairingFactory.getInstance().loadParameters("a.properties");
 		this.pairing = PairingFactory.getPairing(curveParams);
 		params.setPairing(this.pairing);
 		

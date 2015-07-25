@@ -81,15 +81,10 @@ public class SocketServer extends Thread {
                         
                         userGK = DB.getGK(userid);
                         byte[] userGKname = new byte['c'];
-                        byte[] userGKByte = Add2Arrays(userGKname, userGK);
-                        
-                        userZK = DB.getZK(userid);
-                        byte[] userZKname = new byte['d'];
-                        byte[] userZKByte = Add2Arrays(userZKname, userZK);
-                        
+                        byte[] userGKByte = Add2Arrays(userGKname, userGK);                
                         
                         userPrivateKey = DB.getPrivateKey(userid);
-                        byte[] userPKname = new byte['e'];
+                        byte[] userPKname = new byte['d'];
                         byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
                         
                         userRole = DB.getRole(userid);
@@ -99,7 +94,6 @@ public class SocketServer extends Thread {
                         output.write(userGByte);
                         output.write(userKByte);
                         output.write(userGKByte);
-                        output.write(userZKByte);
                         output.write(userPKByte);
                         output.write(userRole);
                         

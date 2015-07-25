@@ -66,18 +66,27 @@ public class SocketServer extends Thread {
             while (true) {
                 
                 while ((data = input.readLine()) != null) {
+                    
+                    System.out.println("we got this:");
                     System.out.println(data);
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     if (data.startsWith("Userinfo:")) {
                         System.out.println("Did you make it here");
                         usrid = data.substring(9);
                         int userid = Integer.parseInt(usrid);
                         //Grab the values in the database
                         DatabaseGetSet DB = new DatabaseGetSet();
-                        
+                        System.out.println("syntax check");
                         userG = DB.getG(userid);
                         byte[] userGname = {'a'};
                         byte[] userGByte = Add2Arrays(userGname, userG);
-                        
+                        System.out.println("syntax check");
                         userK = DB.getK(userid);
                         byte[] userKname = {'b'};
                         byte[] userKByte = Add2Arrays(userKname, userK);
@@ -138,6 +147,7 @@ public class SocketServer extends Thread {
                         }
                         receivedUsername = false;
                         receivedPassword = false;
+                        System.out.println("sent login response");
                     }
                     
                     if(data.startsWith("fileList:")){

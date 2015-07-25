@@ -136,17 +136,17 @@ public class SocketServer extends Thread {
                         
                         //Now send them to user
                         output.write(userGByte);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         output.write(userKByte);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         output.write(userGKByte);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         output.write(userZKByte);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         output.write(userPKByte);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         output.write(userRole);
-                        output.flush();
+                        clientSoc.getOutputStream().flush();
                         
                     }    
 
@@ -155,7 +155,7 @@ public class SocketServer extends Thread {
                     	String[] buffer = download.listFiles();
                     	for(int i = 0; i < buffer.length; i++){
                     		output2.write(buffer[i]);
-                                output.flush();
+                                clientSoc.getOutputStream().flush();
                     	}
                     }
                     

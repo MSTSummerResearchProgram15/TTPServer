@@ -89,7 +89,6 @@ public class SocketServer extends Thread {
                         
                         userPrivateKey = DB.getPrivateKey(userid);
                         byte[] userPKname = {'e'};
-
                         byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
                         
                         userRole = DB.getRole(userid);

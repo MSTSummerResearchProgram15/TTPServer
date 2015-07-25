@@ -163,6 +163,7 @@ public class UserCreation {
         byte[] pw = password.getBytes();
         KeyGen key;
         User owner;
+        pw = hash(pw);
         
         try {
             // Quan do this

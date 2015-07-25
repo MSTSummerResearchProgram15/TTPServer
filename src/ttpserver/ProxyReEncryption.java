@@ -28,7 +28,7 @@ public class ProxyReEncryption {
 	BufferedWriter bw;
 	Element ownerPublicKey;
 	Element c1, c2;
-	public Element reencrypt(String userID, int count){
+	public Element reencrypt(int userID, int count){
 		DatabaseGetSet db = new DatabaseGetSet();
 		FileReaderWriter bytes = new FileReaderWriter();
 		ownerPublicKey.setFromBytes(db.getPublicKey(1)); //get the length of owner PK from database

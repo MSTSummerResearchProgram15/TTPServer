@@ -24,6 +24,7 @@ public class SocketServer extends Thread {
     int keySize;
     Params params;
     DropboxDownload download;
+    int user;
 
     SocketServer() {
         this.start();
@@ -121,7 +122,7 @@ public class SocketServer extends Thread {
                     	fileToDownload = data.substring(9);
                     	int count = download.download(fileToDownload);
                     	ProxyReEncryption reencrypt = new ProxyReEncryption();
-                    	reencrypt.reencrypt(usrid, count);
+                    	reencrypt.reencrypt(user, count);
                     	FTPServer ftpserver = new FTPServer();
                     	for(int i = 0; i < count; i++){
                     		ftpserver.send("File" + i + ".txt");
@@ -152,7 +153,7 @@ public class SocketServer extends Thread {
         byte[] myDbPw = null;
         //Convert username to int (because we stored integer)
         
-        int user = -1;
+        user = -1;
         try{
         user = Integer.parseInt(usr);
         }catch(NumberFormatException e){

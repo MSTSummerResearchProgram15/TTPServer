@@ -25,6 +25,7 @@ public class DatabaseGetSet {
     public void setUserID(int userID) throws SQLException {
         pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID) VALUE(?)");
         pstmt.setInt(1, userID);
+        
     }
 
     public void setPassword(byte[] password) throws SQLException {

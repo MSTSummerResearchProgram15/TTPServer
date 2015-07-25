@@ -10,6 +10,7 @@ import java.net.*;
 
 import databasemanager.*;
 import it.unisa.dia.gas.jpbc.PairingParameters;
+import it.unisa.dia.gas.plaf.jpbc.pairing.PairingFactory;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.logging.Level;
@@ -100,7 +101,7 @@ public class UserCreation {
         //byte[] pairingBytes = series.serialize(params.getPairing());
           
         byte[] curveParamsBytes = SerializationUtils.serialize(params.getCurveParameters());
-
+        
           
         //Store all generated keys to MySQL database  
         
@@ -113,6 +114,7 @@ public class UserCreation {
             connection = DatabaseManager.getInstance().getConnection();
             stmt = connection.createStatement();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO USER_TABLE(userID, password, pairing, g, k, gk, zk,  publicKey, secretKey, role) VALUE(?,?,?,?,?,?,?,?,?,?)");           
+            
             
             //set values            
             pstmt.setInt(1, userid);
@@ -171,8 +173,8 @@ public class UserCreation {
             
             //Create the private and public key
             
-            PairingParameters p = SerializationUtils.deserialize(userCurveParams);
-            Params pr = new Params(userG, userK, userGK, userZK, p);
+            //PairingParameters p = SerializationUtils.deserialize(userCurveParams); // not used
+            Params pr = new Params(userG, userK, userGK, userZK);
             
             
             key = new KeyGen(pr);

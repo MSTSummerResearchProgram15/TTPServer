@@ -72,19 +72,24 @@ public class SocketServer extends Thread {
                         DatabaseGetSet DB = new DatabaseGetSet();
                         
                         userG = DB.getG(userid);
-                        byte[] userGname = new byte['a'];
+                        byte[] userGname = {'a'};
                         byte[] userGByte = Add2Arrays(userGname, userG);
                         
                         userK = DB.getK(userid);
-                        byte[] userKname = new byte['b'];
+                        byte[] userKname = {'b'};
                         byte[] userKByte = Add2Arrays(userKname, userK);
                         
                         userGK = DB.getGK(userid);
-                        byte[] userGKname = new byte['c'];
-                        byte[] userGKByte = Add2Arrays(userGKname, userGK);                
+                        byte[] userGKname = {'c'};
+                        byte[] userGKByte = Add2Arrays(userGKname, userGK);
+                        
+                        userZK = DB.getZK(userid);
+                        byte[] userZKname = {'d'};
+                        byte[] userZKByte = Add2Arrays(userZKname, userZK);
                         
                         userPrivateKey = DB.getPrivateKey(userid);
-                        byte[] userPKname = new byte['d'];
+                        byte[] userPKname = {'e'};
+
                         byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
                         
                         userRole = DB.getRole(userid);
@@ -94,6 +99,7 @@ public class SocketServer extends Thread {
                         output.write(userGByte);
                         output.write(userKByte);
                         output.write(userGKByte);
+                        output.write(userZKByte);
                         output.write(userPKByte);
                         output.write(userRole);
                         

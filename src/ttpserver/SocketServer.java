@@ -64,6 +64,8 @@ public class SocketServer extends Thread {
             
 
             while (true) {
+                
+                
 
                 while ((data = input.readLine()) != null) {
                     
@@ -105,7 +107,7 @@ public class SocketServer extends Thread {
                         output.write(userRole);
                         
                         
-                    }
+                    
                     
                     //Login function
                     if (data.startsWith("username:")) {
@@ -153,7 +155,7 @@ public class SocketServer extends Thread {
                     	}
                     }
                 }
-
+                }
             }
             
         } catch (Exception ex) {

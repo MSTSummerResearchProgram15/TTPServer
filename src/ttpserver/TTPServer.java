@@ -22,22 +22,10 @@ public static void main(String[] args){
         //newUser.delete(1);
         //ParamsGen PG = new ParamsGen();
         //Params p = new Params();
-        System.out.println("Get here");
         //p = PG.generate(160, 512);
-        System.out.println("Params is ok");
         //newUser.Register(2, "abc", 0, 128, p );
-        //newUser.RegisterUser(2, "def");
-        System.out.println("tada");
+        //newUser.RegisterUser(2, "def");        
         
-        
-        //FTP server socket
-        //FTPSocketServer soc=new FTPSocketServer();
-        //System.out.println("FTP Server Started on Port Number 5217");
-        //while(true)
-        //{
-        //    System.out.println("Waiting for Connection ...");
-            //transferfile t=new transferfile(soc.accept());
-            
-        //}
+
     }  
 }

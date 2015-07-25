@@ -34,7 +34,9 @@ public class SocketServer extends Thread {
     public void run() {
 
         try {
-        	download = new DropboxDownload();
+            System.out.println("BEfore dropbox");
+            download = new DropboxDownload();
+            System.out.println("After dropbox");
             server = new ServerSocket(ServerPort.port);
             Socket clientSoc = null;
             BufferedReader input;
@@ -52,7 +54,7 @@ public class SocketServer extends Thread {
             byte[] userPublicKey = null;
             byte[] userPrivateKey = null;
             int userRole;
-
+            System.out.println("Before Client connection");
 
             clientSoc = server.accept();
 

@@ -19,12 +19,13 @@ public static void main(String[] args){
         SocketServer server = new SocketServer();
         System.out.println("Hello");
         //UserCreation newUser = new UserCreation();       
-        //newUser.delete(1);
+        //newUser.delete(2);
+
         //ParamsGen PG = new ParamsGen();
         //Params p = new Params();
         //p = PG.generate(160, 512);
         //newUser.Register(2, "abc", 0, 128, p );
-        //newUser.RegisterUser(2, "def");        
+        //newUser.RegisterUser(3, "qwerty");        
         
 
     }  

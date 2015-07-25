@@ -23,6 +23,7 @@ public class SocketServer extends Thread {
     ServerSocket server;
     int keySize;
     Params params;
+    DropboxDownload download;
 
     SocketServer() {
         this.start();
@@ -31,11 +32,13 @@ public class SocketServer extends Thread {
     public void run() {
 
         try {
+        	download = new DropboxDownload();
             server = new ServerSocket(ServerPort.port);
             Socket clientSoc = null;
             BufferedReader input;
             PrintStream output;
-            String data, usr = null, pw = null, usrid;
+            BufferedWriter output2;
+            String data, usr = null, pw = null, usrid = null, fileToDownload;
             boolean a = false;
             boolean receivedUsername = false;
             boolean receivedPassword = false;
@@ -52,30 +55,32 @@ public class SocketServer extends Thread {
 
             input = new BufferedReader(new InputStreamReader(clientSoc.getInputStream()));
             output = new PrintStream(clientSoc.getOutputStream());
+            output2 = new BufferedWriter(new OutputStreamWriter(clientSoc.getOutputStream()));
+            
 
             while (true) {
 
                 while ((data = input.readLine()) != null) {
                     
-                    if (data.startsWith("Userinfo:")) {
-                        usrid = data.substring(9);
-                        int userid = Integer.parseInt(usrid);
+                    //if (data.startsWith("Userinfo:")) {
+                        //usrid = data.substring(9);
+                        //int userid = Integer.parseInt(usrid);
                         //Grab the values in the database
-                        DatabaseGetSet DB = new DatabaseGetSet();
+                        //DatabaseGetSet DB = new DatabaseGetSet();
                         
-                        userCurveParams = DB.getCurveParams(userid);
-                        userG = DB.getG(userid);
-                        userK = DB.getK(userid);
-                        userGK = DB.getGK(userid);
-                        userZK = DB.getZK(userid);
-                        userPublicKey = DB.getPublicKey(userid);
-                        userPrivateKey = DB.getPrivateKey(userid);
+                        //userCurveParams = DB.getCurveParams(userid);
+                        //userG = DB.getG(userid);
+                        //userK = DB.getK(userid);
+                        //userGK = DB.getGK(userid);
+                        //userZK = DB.getZK(userid);
+                        //userPublicKey = DB.getPublicKey(userid);
+                        //userPrivateKey = DB.getPrivateKey(userid);
                         
                         
                         //Now send them to user
                         
                         
-                    }
+                    //}
                     
                     //Login function
                     if (data.startsWith("username:")) {
@@ -103,6 +108,24 @@ public class SocketServer extends Thread {
                         }
                         receivedUsername = false;
                         receivedPassword = false;
+                    }
+                    
+                    if(data.startsWith("fileList:")){
+                    	String[] buffer = download.listFiles();
+                    	for(int i = 0; i < buffer.length; i++){
+                    		output2.write(buffer[i]);
+                    	}
+                    }
+                    
+                    if(data.startsWith("download:")){
+                    	fileToDownload = data.substring(9);
+                    	int count = download.download(fileToDownload);
+                    	ProxyReEncryption reencrypt = new ProxyReEncryption();
+                    	reencrypt.reencrypt(usrid, count);
+                    	FTPServer ftpserver = new FTPServer();
+                    	for(int i = 0; i < count; i++){
+                    		ftpserver.send("File" + i + ".txt");
+                    	}
                     }
                 }
 

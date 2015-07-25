@@ -43,14 +43,37 @@ public class DropboxDownload {
         System.out.println("Linked account: " + client.getAccountInfo().displayName);
 	}
 	
-	public void download(int i) throws DbxException, IOException{
+	public int download(String folderName) throws DbxException, IOException{
+		 DbxEntry.WithChildren listing = client.getMetadataWithChildren("/folderName");
+		//get the number of files in the specified folder
+	     int count = 0;
+	     for (DbxEntry child : listing.children) {
+	        count++;
+	     }
+	     
+	    //Download each file in the dropbox directory specified
+	    for(int i = 0; i < count; i++){
 		FileOutputStream outputStream = new FileOutputStream("File" + i + ".txt");
-		try {
-			DbxEntry.File downloadedFile = client.getFile("/Messages/File" + i + ".txt", null,
-					outputStream);
-			System.out.println("Metadata: " + downloadedFile.toString());
-		} finally {
-			outputStream.close();
-		}
+			try {
+				DbxEntry.File downloadedFile = client.getFile("/" + folderName + "/File" + i + ".txt", null,
+						outputStream);
+				System.out.println("Metadata: " + downloadedFile.toString());
+			} finally {
+				outputStream.close();
+			}
+	    }
+	    return count;
+	}
+	
+	public String[] listFiles() throws DbxException{
+		DbxEntry.WithChildren listing = client.getMetadataWithChildren("/");
+		String[] buffer = new String[listing.children.size()];
+		int i = 0;
+        for (DbxEntry child : listing.children) {
+            buffer[i] = child.name;
+            i++;
+        }
+        System.out.println("NOMOREFILES");
+        return buffer;
 	}
 }

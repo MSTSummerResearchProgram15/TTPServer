@@ -106,20 +106,24 @@ public class SocketServer extends Thread {
                         output.write(userPKByte);
                         output.write(userRole);
                         
-                        
+                    }    
                     
                     
                     //Login function
                     if (data.startsWith("username:")) {
                         usr = data.substring(9);
                         receivedUsername = true;
+                        System.out.println("Server. Received username: "+usr);
+
                     } 
                     if (data.startsWith("password:")) {
                         pw = data.substring(9);
                         receivedPassword = true;
+                        System.out.println("Server. Received password: "+pw);
+
                     } 
                     if (usr != null && !usr.isEmpty() && pw != null && !pw.isEmpty()) {
-
+                        System.out.println("We got here");
                         a = verifyUser(usr, pw);
                         usr = null;
                         pw = null;
@@ -155,7 +159,7 @@ public class SocketServer extends Thread {
                     	}
                     }
                 }
-                }
+                
             }
             
         } catch (Exception ex) {

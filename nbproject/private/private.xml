@@ -3,24 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/KeyGen.java</file>
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/Params.java</file>
             <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/TTPServer.java</file>
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/User.java</file>
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/DatabaseGetSet.java</file>
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/ServerPort.java</file>
+            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/Params.java</file>
+            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/ParamsGen.java</file>
             <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/SocketServer.java</file>
             <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/UserCreation.java</file>
-            <file>file:/C:/Users/Dylan/Documents/NetBeansProjects/TTPServer/src/ttpserver/ProxyReEncryption.java</file>
-=======
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/SocketServer.java</file>
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/DatabaseGetSet.java</file>
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/TTPServer.java</file>
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/UserCreation.java</file>
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/ParamsGen.java</file>
-            <file>file:/Users/macbook/NetBeansProjects/TTPServer/src/ttpserver/Params.java</file>
->>>>>>> 5b0b941585f8131dfc8b865059ba5ac44d43bd26
         </group>
     </open-files>
 </project-private>

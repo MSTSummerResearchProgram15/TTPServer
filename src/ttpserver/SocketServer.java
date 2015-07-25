@@ -35,7 +35,7 @@ public class SocketServer extends Thread {
 
         try {
             System.out.println("BEfore dropbox");
-            download = new DropboxDownload();
+            //download = new DropboxDownload();
             System.out.println("After dropbox");
             server = new ServerSocket(ServerPort.port);
             Socket clientSoc = null;
@@ -69,53 +69,8 @@ public class SocketServer extends Thread {
                     
                     System.out.println("we got this:");
                     System.out.println(data);
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    if (data.startsWith("Userinfo:")) {
-                        System.out.println("Did you make it here");
-                        usrid = data.substring(9);
-                        int userid = Integer.parseInt(usrid);
-                        //Grab the values in the database
-                        DatabaseGetSet DB = new DatabaseGetSet();
-                        System.out.println("syntax check");
-                        userG = DB.getG(userid);
-                        byte[] userGname = {'a'};
-                        byte[] userGByte = Add2Arrays(userGname, userG);
-                        System.out.println("syntax check");
-                        userK = DB.getK(userid);
-                        byte[] userKname = {'b'};
-                        byte[] userKByte = Add2Arrays(userKname, userK);
-                        
-                        userGK = DB.getGK(userid);
-                        byte[] userGKname = {'c'};
-                        byte[] userGKByte = Add2Arrays(userGKname, userGK);
-                        
-                        userZK = DB.getZK(userid);
-                        byte[] userZKname = {'d'};
-                        byte[] userZKByte = Add2Arrays(userZKname, userZK);
-                        
-                        userPrivateKey = DB.getPrivateKey(userid);
-                        byte[] userPKname = {'e'};
-                        byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
-                        
-                        userRole = DB.getRole(userid);
-
-                        
-                        //Now send them to user
-                        output.write(userGByte);
-                        output.write(userKByte);
-                        output.write(userGKByte);
-                        output.write(userZKByte);
-                        output.write(userPKByte);
-                        output.write(userRole);
-                        
-                    }    
-                    
+                      
+                 
                     
                     //Login function
                     if (data.startsWith("username:")) {
@@ -150,10 +105,58 @@ public class SocketServer extends Thread {
                         System.out.println("sent login response");
                     }
                     
+             if (data.startsWith("Userinfo:")) {
+                        System.out.println("Did you make it here");
+                        usrid = data.substring(9);
+                        int userid = Integer.parseInt(usrid);
+                        //Grab the values in the database
+                        DatabaseGetSet DB = new DatabaseGetSet();
+                        System.out.println("syntax check");
+                        userG = DB.getG(userid);
+                        byte[] userGname = {'a'};
+                        byte[] userGByte = Add2Arrays(userGname, userG);
+                        System.out.println("syntax check");
+                        userK = DB.getK(userid);
+                        byte[] userKname = {'b'};
+                        byte[] userKByte = Add2Arrays(userKname, userK);
+                        
+                        userGK = DB.getGK(userid);
+                        byte[] userGKname = {'c'};
+                        byte[] userGKByte = Add2Arrays(userGKname, userGK);
+                        
+                        userZK = DB.getZK(userid);
+                        byte[] userZKname = {'d'};
+                        byte[] userZKByte = Add2Arrays(userZKname, userZK);
+                        
+                        userPrivateKey = DB.getPrivateKey(userid);
+                        byte[] userPKname = {'e'};
+                        byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
+                        
+                        userRole = DB.getRole(userid);
+
+                        
+                        //Now send them to user
+                        output.write(userGByte);
+                        output.flush();
+                        output.write(userKByte);
+                        output.flush();
+                        output.write(userGKByte);
+                        output.flush();
+                        output.write(userZKByte);
+                        output.flush();
+                        output.write(userPKByte);
+                        output.flush();
+                        output.write(userRole);
+                        output.flush();
+                        
+                    }    
+
+                    
                     if(data.startsWith("fileList:")){
                     	String[] buffer = download.listFiles();
                     	for(int i = 0; i < buffer.length; i++){
                     		output2.write(buffer[i]);
+                                output.flush();
                     	}
                     }
                     

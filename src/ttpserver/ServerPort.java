@@ -10,5 +10,5 @@ package ttpserver;
  * @author minhq
  */
 public class ServerPort {
-    public static int port = 8080; //default port for server
+    public static int port = 6929; //default port for server
 }

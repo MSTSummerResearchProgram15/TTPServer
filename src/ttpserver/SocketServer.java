@@ -68,7 +68,7 @@ public class SocketServer extends Thread {
                 while ((data = input.readLine()) != null) {
                     
                     System.out.println("we got this:");
-                    System.out.println(data);
+                    System.out.println(data); 
                       
                 
                     //Login function
@@ -110,27 +110,27 @@ public class SocketServer extends Thread {
                         int userid = Integer.parseInt(usrid);
                         //Grab the values in the database
                         DatabaseGetSet DB = new DatabaseGetSet();
-                        System.out.println("syntax check");
+                        System.out.println("syntax check1");
                         userG = DB.getG(userid);
                         byte[] userGname = {'a'};
                         byte[] userGByte = Add2Arrays(userGname, userG);
-                        System.out.println("syntax check");
+                        System.out.println("syntax check2");
                         userK = DB.getK(userid);
                         byte[] userKname = {'b'};
                         byte[] userKByte = Add2Arrays(userKname, userK);
-                        
+                        System.out.println("syntax check3");
                         userGK = DB.getGK(userid);
                         byte[] userGKname = {'c'};
                         byte[] userGKByte = Add2Arrays(userGKname, userGK);
-                        
+                        System.out.println("syntax check4");
                         userZK = DB.getZK(userid);
                         byte[] userZKname = {'d'};
                         byte[] userZKByte = Add2Arrays(userZKname, userZK);
-                        
+                        System.out.println("syntax check5");
                         userPrivateKey = DB.getPrivateKey(userid);
                         byte[] userPKname = {'e'};
                         byte[] userPKByte = Add2Arrays(userPKname, userPrivateKey);
-                        
+                        System.out.println("syntax check6");
                         userRole = DB.getRole(userid);
 
                         

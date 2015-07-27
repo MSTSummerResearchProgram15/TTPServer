@@ -6,7 +6,7 @@ import it.unisa.dia.gas.jpbc.Field;
 import it.unisa.dia.gas.jpbc.Pairing;
 import it.unisa.dia.gas.jpbc.PairingParameters;
 import it.unisa.dia.gas.plaf.jpbc.pairing.PairingFactory;
-
+//This class stores the various parameters generated
 public class Params {
 
     private Field zr, g1, gt;
@@ -15,9 +15,8 @@ public class Params {
     private Pairing pairing;
     private int chunkSize;
     private PairingParameters curveParams;
-
     public Params(byte[] g, byte[] k, byte[] g_k, byte[] z_k){
-        this.pairing = PairingFactory.getPairing("a.properties");
+        this.pairing = PairingFactory.getPairing("a.properties"); //Generate pairing from a properties file
         this.zr = this.pairing.getZr();
         this.g1 = this.pairing.getG1();
         this.gt = this.pairing.getGT();

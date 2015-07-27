@@ -16,7 +16,8 @@ public class KeyGen {
                 return user;
 	}
 	
-	public void generateRK(User owner, User user1){
+	public void generateRK(int ownerID, int userID){
+		//This must be updated to get data from database, not from User object
 		user1.setReEncryptKey(user1.getPK().powZn(owner.getISK()).getImmutable()); 
 	}
 }

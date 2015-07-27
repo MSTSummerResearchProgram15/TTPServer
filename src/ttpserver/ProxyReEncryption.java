@@ -28,7 +28,8 @@ public class ProxyReEncryption {
 	BufferedWriter bw;
 	Element ownerPublicKey;
 	Element c1, c2;
-	public Element reencrypt(int userID, int count){
+	KeyGen gen = new KeyGen();
+	public Element reencrypt(int ownerID, int userID, int count){
 		DatabaseGetSet db = new DatabaseGetSet();
 		FileReaderWriter bytes = new FileReaderWriter();
 		ownerPublicKey.setFromBytes(db.getPublicKey(1)); //get the length of owner PK from database
@@ -50,9 +51,8 @@ public class ProxyReEncryption {
 			c2 = gt.newRandomElement();
 			c1.setFromBytes(cipher1);
 			c2.setFromBytes(cipher2);
-			//Element reencrypt = pairing(c1, //reencrypt key here);
+			Element reencrypt = pairing(c1, gen.generateRK(ownerID, userID););
 			Element ialpha = reencrypt.powZn(user1.getISK());
-			//Need to transfer to client here
 		}
 	}
 }

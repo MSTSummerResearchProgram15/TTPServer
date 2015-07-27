@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+//This class is used to transfer the re-encrypted file from TTPServer to client
 public class FTPServer {
 	Socket sock;
     public FTPServer() throws IOException{
